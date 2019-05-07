@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "cross-env DEBUG=express-practice:* nodemon ./bin/www",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -12,5 +13,9 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "nodemon": "^1.19.0"
   }
 }
