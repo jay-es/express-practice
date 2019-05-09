@@ -1,10 +1,9 @@
 const userData = require('./users-data');
 
-const getSummery = () =>
-  userData.map(v => ({
-    id: v.id,
-    name: v.name,
-  }));
+const getSummery = () => userData.map(v => ({
+  id: v.id,
+  name: v.name,
+}));
 
 /**
  * @param {number} id

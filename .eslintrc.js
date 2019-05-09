@@ -3,7 +3,9 @@ module.exports = {
     node: true,
   },
   extends: [
-    'standard',
-    'plugin:prettier/recommended',
+    'airbnb-base',
   ],
+  rules: {
+    'no-unused-vars': ['error', { args: 'none' }], // 引数は対象外
+  }
 };

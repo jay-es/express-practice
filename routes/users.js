@@ -1,15 +1,16 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+
+const router = express.Router();
 const userModel = require('../models/usersModel');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   res.render('users', {
     users: userModel.getSummery(),
   });
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', (req, res, next) => {
   const userId = Number(req.params.id);
   const userData = userModel.findById(userId);
 
