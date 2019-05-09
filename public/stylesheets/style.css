@@ -6,3 +6,18 @@ body {
 a {
   color: #00B7FF;
 }
+
+.j-table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+
+.j-table th,
+.j-table td {
+  padding: 0.25em 0.75em;
+  border: 1px solid #ccc;
+}
+
+.j-table tbody th {
+  text-align: inherit;
+}
