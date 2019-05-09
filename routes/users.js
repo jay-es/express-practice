@@ -10,12 +10,13 @@ router.get('/', (req, res, next) => {
   });
 });
 
-router.get('/:id', (req, res, next) => {
-  const userId = Number(req.params.id);
+router.get('/:userId(\\d+)', (req, res, next) => {
+  const userId = Number(req.params.userId);
   const userData = userModel.findById(userId);
 
   if (!userData) {
     next({ message: 'No User Found' });
+    return;
   }
 
   Object.entries(userData).forEach(([key, val]) => {

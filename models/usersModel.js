@@ -1,6 +1,6 @@
-const userData = require('./users-data');
+const { usersTable } = require('./tables/usersTable');
 
-const getSummery = () => userData.map(v => ({
+const getSummery = () => usersTable.map(v => ({
   id: v.id,
   name: v.name,
 }));
@@ -8,7 +8,7 @@ const getSummery = () => userData.map(v => ({
 /**
  * @param {number} id
  */
-const findById = id => userData.find(v => v.id === id);
+const findById = id => usersTable.find(v => v.id === id);
 
 module.exports = {
   getSummery,
