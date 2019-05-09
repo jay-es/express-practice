@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "cross-env DEBUG=express-practice:* nodemon ./bin/www",
-    "lint": "eslint --ext .js .",
+    "eslint": "eslint --ext .js .",
+    "mocha": "mocha \"./{,!(node_modules)/**}/_tests/*.spec.js\"",
+    "mocha:watch": "npm run mocha -- --reporter dot --watch",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -20,6 +22,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
+    "mocha": "^6.1.4",
     "nodemon": "^1.19.0"
   }
 }
