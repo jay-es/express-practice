@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ToDos</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>ToDos</h1>
+    <table class="j-table">
+      <thead>
+        <th>id</th>
+        <th>userId</th>
+        <th>title</th>
+        <th>completed</th>
+      </thead>
+      <tbody>
+        <% todos.forEach(todo => { %>
+          <tr>
+            <td><a href="/todos/<%= todo.id %>"><%= todo.id %></a></td>
+            <td>
+              <a href="/todos/?userId=<%= todo.userId %>"><%= todo.userId %></a>
+            </td>
+            <td><%= todo.title %></td>
+            <td><%= todo.completed %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>
