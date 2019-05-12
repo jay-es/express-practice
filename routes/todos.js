@@ -1,31 +1,33 @@
 const express = require('express');
+const TodoModel = require('../models/todosModel');
 
 const router = express.Router();
-const todosModel = require('../models/todosModel');
 
-router.get('/', (req, res, next) => {
-  let todos;
+router.get('/', async (req, res, next) => {
+  const conds = {};
 
   if (req.query.userId) {
-    const userId = Number(req.query.userId);
-    todos = todosModel.getByUserId(userId);
-  } else {
-    todos = todosModel.getAll();
+    conds.userId = Number(req.query.userId);
   }
 
   if (req.query.completed) {
-    const completed = !!Number(req.query.completed);
-    todos = todos.filter(v => v.completed === completed);
+    conds.completed = !!Number(req.query.completed);
   }
+
+  const todos = await TodoModel
+    .find(conds, null, { sort: 'id' })
+    .exec();
 
   res.render('todos', {
     todos,
   });
 });
 
-router.get('/:todoId(\\d+)', (req, res, next) => {
+router.get('/:todoId(\\d+)', async (req, res, next) => {
   const todoId = Number(req.params.todoId);
-  const todo = todosModel.findById(todoId);
+  const todo = await TodoModel
+    .findOne({ id: todoId })
+    .exec();
 
   if (!todo) {
     next({ message: 'No ToDo Found' });

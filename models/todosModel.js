@@ -1,19 +1,10 @@
-const { todosTable } = require('./tables/todosTable');
+const mongoose = require('mongoose');
 
-const getAll = () => [...todosTable];
+const todoSchema = new mongoose.Schema({
+  userId: Number,
+  id: Number,
+  title: String,
+  completed: Boolean,
+});
 
-/**
- * @param {number} id
- */
-const findById = id => todosTable.find(v => v.id === id);
-
-/**
- * @param {number} userId
- */
-const getByUserId = userId => todosTable.filter(v => v.userId === userId);
-
-module.exports = {
-  getAll,
-  findById,
-  getByUserId,
-};
+module.exports = mongoose.model('todo', todoSchema);

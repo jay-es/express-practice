@@ -1,16 +1,10 @@
-const { usersTable } = require('./tables/usersTable');
+const mongoose = require('mongoose');
 
-const getSummery = () => usersTable.map(v => ({
-  id: v.id,
-  name: v.name,
-}));
+const userSchema = new mongoose.Schema({
+  id: Number,
+  name: String,
+  username: String,
+  email: String,
+});
 
-/**
- * @param {number} id
- */
-const findById = id => usersTable.find(v => v.id === id);
-
-module.exports = {
-  getSummery,
-  findById,
-};
+module.exports = mongoose.model('user', userSchema);

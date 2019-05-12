@@ -1,18 +1,24 @@
 const express = require('express');
+const UserModel = require('../models/usersModel');
 
 const router = express.Router();
-const userModel = require('../models/usersModel');
 
-/* GET users listing. */
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
+  const users = await UserModel
+    .find(null, null, { sort: 'id' })
+    .exec();
+
   res.render('users', {
-    users: userModel.getSummery(),
+    users,
   });
 });
 
-router.get('/:userId(\\d+)', (req, res, next) => {
+router.get('/:userId(\\d+)', async (req, res, next) => {
   const userId = Number(req.params.userId);
-  const userData = userModel.findById(userId);
+  const result = await UserModel
+    .findOne({ id: userId })
+    .exec();
+  const userData = result && result._doc;
 
   if (!userData) {
     next({ message: 'No User Found' });

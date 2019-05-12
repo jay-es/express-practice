@@ -9,6 +9,7 @@
 const debug = require('debug')('express-practice:server');
 const http = require('http');
 const app = require('../app');
+require('../db');
 
 /**
  * Get port from environment and store in Express.
