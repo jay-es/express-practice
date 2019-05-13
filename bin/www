@@ -9,7 +9,13 @@
 const debug = require('debug')('express-practice:server');
 const http = require('http');
 const app = require('../app');
-require('../db');
+const db = require('../db');
+
+/**
+ * Connect MongoDB.
+ */
+
+db.open();
 
 /**
  * Get port from environment and store in Express.
