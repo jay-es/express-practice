@@ -10,14 +10,19 @@ describe('indexController', () => {
 
     indexController.getIndex(null, res);
 
-    it('1度だけ呼ばれる', () => {
+    it('renderは1度だけ呼ばれる', () => {
       assert(res.render.calledOnce);
     });
 
-    it('引数', () => {
-      const [view, options] = res.render.args[0];
+    it('render引数: viewファイル名', () => {
+      const [view] = res.render.args[0];
 
       assert.strictEqual('index', view);
+    });
+
+    it('render引数: title', () => {
+      const [, options] = res.render.args[0];
+
       assert.strictEqual('Express', options.title);
     });
   });

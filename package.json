@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "cross-env DEBUG=express-practice:* nodemon ./bin/www",
     "eslint": "eslint --ext .js .",
-    "mocha": "mocha \"./{,!(node_modules)/**}/_tests/*.spec.js\"",
-    "mocha:watch": "npm run mocha -- --reporter dot --watch",
+    "mocha": "cross-env NODE_ENV=test mocha \"./{,!(node_modules)/**}/_tests/*.spec.js\"",
+    "mocha:watch": "cross-env NODE_ENV=test npm run mocha -- --reporter dot --watch",
     "start": "node ./bin/www"
   },
   "dependencies": {

@@ -9,7 +9,7 @@ mongod.exe --config "C:\Program Files\MongoDB\Server\4.0\bin\mongod.cfg" --insta
 
 ## JSON ファイルからインポート
 ```powershell
-mongoimport.exe --db express-practice --collection users --drop --file r:\users.json
+mongoimport.exe --db express-practice --collection users --file r:\users.json --drop --maintainInsertionOrder
 ```
 
 # JSON データ取得元
