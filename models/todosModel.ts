@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const todoSchema = new mongoose.Schema({
   userId: Number,
@@ -7,4 +7,4 @@ const todoSchema = new mongoose.Schema({
   completed: Boolean,
 });
 
-module.exports = mongoose.models.todo || mongoose.model('todo', todoSchema);
+export default mongoose.models.todo || mongoose.model('todo', todoSchema);

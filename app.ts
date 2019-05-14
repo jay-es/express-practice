@@ -1,12 +1,12 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+import createError from 'http-errors';
+import express, { ErrorRequestHandler } from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
-const indexRouter = require('./routes/index');
-const todosRouter = require('./routes/todos');
-const usersRouter = require('./routes/users');
+import indexRouter from './routes/index';
+import todosRouter from './routes/todos';
+import usersRouter from './routes/users';
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use(((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -38,6 +38,6 @@ app.use((err, req, res, next) => {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
+}) as ErrorRequestHandler);
 
-module.exports = app;
+export default app;
