@@ -1,5 +1,5 @@
 // https://jsonplaceholder.typicode.com/todos
-exports.todosTable = [
+export default [
   {
     userId: 1,
     id: 1,

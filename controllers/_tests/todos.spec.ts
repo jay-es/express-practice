@@ -1,28 +1,23 @@
-const assert = require('assert');
-const sinon = require('sinon');
-const todosController = require('../todos');
-const TodoModel = require('../../models/todosModel');
-const { todosTable } = require('./tables/todosTable');
-const db = require('../../db');
+import assert from 'assert';
+import todosController from '../todos';
+import TodoModel from '../../models/todosModel';
+import todosTable from './tables/todosTable';
+import db from '../../db';
+import createArgs from './_util';
 
 describe('todosController', () => {
   before(async () => {
     await db.open();
-    await TodoModel.deleteMany();
+    await TodoModel.deleteMany({});
     await TodoModel.insertMany(todosTable);
   });
   after(db.close);
 
   describe('get: /', () => {
-    const req = {
-      query: {},
-    };
-    const res = {
-      render: sinon.spy(),
-    };
+    const { req, res, next } = createArgs();
 
     before(async () => {
-      await todosController.getTodos(req, res);
+      await todosController.getTodos(req, res, next);
     });
 
     it('renderは1度だけ呼ばれる', () => {
@@ -44,17 +39,11 @@ describe('todosController', () => {
   });
 
   describe('get: /?usetId=1', () => {
-    const req = {
-      query: {
-        userId: '1',
-      },
-    };
-    const res = {
-      render: sinon.spy(),
-    };
+    const { req, res, next } = createArgs();
+    req.query.userId = '1';
 
     before(async () => {
-      await todosController.getTodos(req, res);
+      await todosController.getTodos(req, res, next);
     });
 
     it('render引数: todos配列', () => {
@@ -65,17 +54,11 @@ describe('todosController', () => {
   });
 
   describe('get: /?completed=1', () => {
-    const req = {
-      query: {
-        completed: '1',
-      },
-    };
-    const res = {
-      render: sinon.spy(),
-    };
+    const { req, res, next } = createArgs();
+    req.query.completed = '1';
 
     before(async () => {
-      await todosController.getTodos(req, res);
+      await todosController.getTodos(req, res, next);
     });
 
     it('render引数: todos配列', () => {
@@ -86,17 +69,11 @@ describe('todosController', () => {
   });
 
   describe('get: /1', () => {
-    const req = {
-      params: {
-        todoId: '1',
-      },
-    };
-    const res = {
-      render: sinon.spy(),
-    };
+    const { req, res, next } = createArgs();
+    req.params.todoId = '1';
 
     before(async () => {
-      await todosController.getTodoById(req, res);
+      await todosController.getTodoById(req, res, next);
     });
 
     it('renderは1度だけ呼ばれる', () => {
@@ -118,15 +95,8 @@ describe('todosController', () => {
   });
 
   describe('get: /0', () => {
-    const req = {
-      params: {
-        todoId: '0',
-      },
-    };
-    const res = {
-      render: sinon.spy(),
-    };
-    const next = sinon.spy();
+    const { req, res, next } = createArgs();
+    req.params.todoId = '0';
 
     before(async () => {
       await todosController.getTodoById(req, res, next);

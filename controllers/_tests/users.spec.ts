@@ -1,25 +1,23 @@
-const assert = require('assert');
-const sinon = require('sinon');
-const usersController = require('../users');
-const UserModel = require('../../models/usersModel');
-const { usersTable } = require('./tables/usersTable');
-const db = require('../../db');
+import assert from 'assert';
+import usersController from '../users';
+import UserModel from '../../models/usersModel';
+import usersTable from './tables/usersTable';
+import db from '../../db';
+import createArgs from './_util';
 
 describe('usersController', () => {
   before(async () => {
     await db.open();
-    await UserModel.deleteMany();
+    await UserModel.deleteMany({});
     await UserModel.insertMany(usersTable);
   });
   after(db.close);
 
   describe('get: /', () => {
-    const res = {
-      render: sinon.spy(),
-    };
+    const { req, res, next } = createArgs();
 
     before(async () => {
-      await usersController.getUsers(null, res);
+      await usersController.getUsers(req, res, next);
     });
 
     it('renderは1度だけ呼ばれる', () => {
@@ -41,17 +39,11 @@ describe('usersController', () => {
   });
 
   describe('get: /1', () => {
-    const req = {
-      params: {
-        userId: '1',
-      },
-    };
-    const res = {
-      render: sinon.spy(),
-    };
+    const { req, res, next } = createArgs();
+    req.params.userId = '1';
 
     before(async () => {
-      await usersController.getUserById(req, res);
+      await usersController.getUserById(req, res, next);
     });
 
     it('renderは1度だけ呼ばれる', () => {
@@ -72,15 +64,8 @@ describe('usersController', () => {
   });
 
   describe('get: /0', () => {
-    const req = {
-      params: {
-        userId: '0',
-      },
-    };
-    const res = {
-      render: sinon.spy(),
-    };
-    const next = sinon.spy();
+    const { req, res, next } = createArgs();
+    req.params.userId = '0';
 
     before(async () => {
       await usersController.getUserById(req, res, next);

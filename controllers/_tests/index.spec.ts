@@ -1,14 +1,12 @@
-const assert = require('assert');
-const sinon = require('sinon');
-const indexController = require('../index');
+import assert from 'assert';
+import indexController from '../index';
+import createArgs from './_util';
 
 describe('indexController', () => {
   describe('get: /', () => {
-    const res = {
-      render: sinon.spy(),
-    };
+    const { req, res, next } = createArgs();
 
-    indexController.getIndex(null, res);
+    indexController.getIndex(req, res, next);
 
     it('renderは1度だけ呼ばれる', () => {
       assert(res.render.calledOnce);

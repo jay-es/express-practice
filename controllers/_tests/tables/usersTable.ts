@@ -1,5 +1,5 @@
 // https://jsonplaceholder.typicode.com/users
-exports.usersTable = [
+export default [
   {
     id: 1,
     name: 'Leanne Graham',

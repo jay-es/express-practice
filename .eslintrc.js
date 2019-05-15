@@ -7,6 +7,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint', // @typescript-eslint のルールをいくつか無効化
     'plugin:import/typescript', // import 関連の設定
+    'plugin:prettier/recommended',
   ],
   rules: {
     'no-underscore-dangle': ['error', { allow: ['_doc'] }],
@@ -17,9 +18,17 @@ module.exports = {
   },
   overrides: [
     {
-      files: '**/_tests/*.spec.js',
+      files: '**/_tests/*.spec.ts',
       env: {
         mocha: true,
+      },
+    },
+    {
+      files: '**/_tests/*.ts',
+      rules: {
+        'import/no-extraneous-dependencies': ['error', {
+          devDependencies: true,
+        }],
       },
     },
   ],
