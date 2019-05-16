@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "npm-run-all --parallel tsc:watch nodemon mocha:watch",
     "eslint": "eslint --ext .ts ./src",
-    "mocha": "cross-env NODE_ENV=test mocha --opts mocha.opts",
-    "mocha:watch": "cross-env NODE_ENV=test npm run mocha -- --reporter dot --watch",
+    "mocha": "cross-env NODE_ENV=test mocha",
+    "mocha:watch": "cross-env NODE_ENV=test mocha -- --reporter dot --watch",
     "nodemon": "cross-env DEBUG=express-practice:* nodemon",
     "start": "node ./dist/bin/www",
     "tsc": "tsc",

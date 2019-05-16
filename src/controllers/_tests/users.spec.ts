@@ -2,16 +2,13 @@ import assert from 'assert';
 import usersController from '../users';
 import UserModel from '../../models/usersModel';
 import usersTable from './tables/usersTable';
-import db from '../../db';
 import createArgs from './_util';
 
 describe('usersController', () => {
   before(async () => {
-    await db.open();
     await UserModel.deleteMany({});
     await UserModel.insertMany(usersTable);
   });
-  after(db.close);
 
   describe('get: /', () => {
     const { req, res, next } = createArgs();

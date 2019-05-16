@@ -2,16 +2,13 @@ import assert from 'assert';
 import todosController from '../todos';
 import TodoModel from '../../models/todosModel';
 import todosTable from './tables/todosTable';
-import db from '../../db';
 import createArgs from './_util';
 
 describe('todosController', () => {
   before(async () => {
-    await db.open();
     await TodoModel.deleteMany({});
     await TodoModel.insertMany(todosTable);
   });
-  after(db.close);
 
   describe('get: /', () => {
     const { req, res, next } = createArgs();
