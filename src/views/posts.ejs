@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Posts</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Posts</h1>
+    <table class="j-table">
+      <thead>
+        <th>id</th>
+        <th>userId</th>
+        <th>title</th>
+      </thead>
+      <tbody>
+        <% posts.forEach(post => { %>
+          <tr>
+            <td><a href="/posts/<%= post.id %>"><%= post.id %></a></td>
+            <td>
+              <a href="/posts/?userId=<%= post.userId %>"><%= post.userId %></a>
+            </td>
+            <td><%= post.title %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>

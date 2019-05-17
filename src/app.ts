@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
 import indexRouter from './routes/index';
+import postsRouter from './routes/posts';
 import todosRouter from './routes/todos';
 import usersRouter from './routes/users';
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../src/public')));
 
 app.use('/', indexRouter);
+app.use('/posts', postsRouter);
 app.use('/todos', todosRouter);
 app.use('/users', usersRouter);
 

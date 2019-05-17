@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Post Detail</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Post Detail</h1>
+    <table class="j-table">
+      <tbody>
+        <tr><th>id</th><td><%= postData.id %></td></tr>
+        <tr><th>userId</th><td><%= postData.userId %></td></tr>
+        <tr><th>title</th><td><%= postData.title %></td></tr>
+        <tr><th>body</th><td><%- postData.body.replace(/\n/g, '<br>') %></td></tr>
+        <tr>
+          <th>comments</th>
+          <td>
+            <% postData.comments.forEach(comment => { %>
+              <table class="j-table">
+                <tbody>
+                  <tr><th>id</th><td><%= comment.id %></td></tr>
+                  <tr><th>name</th><td><%= comment.name %></td></tr>
+                  <tr><th>email</th><td><%= comment.email %></td></tr>
+                  <tr><th>body</th><td><%- comment.body.replace(/\n/g, '<br>') %></td></tr>
+                </tbody>
+              </table>
+            <% }); %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
