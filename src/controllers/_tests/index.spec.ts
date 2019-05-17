@@ -15,13 +15,13 @@ describe('indexController', () => {
     it('render引数: viewファイル名', () => {
       const [view] = res.render.args[0];
 
-      assert.strictEqual('index', view);
+      assert.strictEqual(view, 'index');
     });
 
     it('render引数: title', () => {
       const [, options] = res.render.args[0];
 
-      assert.strictEqual('Express', options.title);
+      assert.strictEqual(options.title, 'Express');
     });
   });
 });

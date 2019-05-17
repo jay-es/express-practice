@@ -24,14 +24,14 @@ describe('todosController', () => {
     it('render引数: viewファイル名', () => {
       const [view] = res.render.args[0];
 
-      assert.strictEqual('todos', view);
+      assert.strictEqual(view, 'todos');
     });
 
     it('render引数: todos配列', () => {
       const [, options] = res.render.args[0];
 
       assert(Array.isArray(options.todos));
-      assert.strictEqual(200, options.todos.length);
+      assert.strictEqual(options.todos.length, 200);
     });
   });
 
@@ -46,7 +46,7 @@ describe('todosController', () => {
     it('render引数: todos配列', () => {
       const [, options] = res.render.args[0];
 
-      assert.strictEqual(20, options.todos.length);
+      assert.strictEqual(options.todos.length, 20);
     });
   });
 
@@ -61,7 +61,7 @@ describe('todosController', () => {
     it('render引数: todos配列', () => {
       const [, options] = res.render.args[0];
 
-      assert.strictEqual(90, options.todos.length);
+      assert.strictEqual(options.todos.length, 90);
     });
   });
 
@@ -80,14 +80,14 @@ describe('todosController', () => {
     it('render引数: viewファイル名', () => {
       const [view] = res.render.args[0];
 
-      assert.strictEqual('todos', view);
+      assert.strictEqual(view, 'todos');
     });
 
     it('render引数: todos配列', () => {
       const [, options] = res.render.args[0];
 
       assert(Array.isArray(options.todos));
-      assert.strictEqual(1, options.todos.length);
+      assert.strictEqual(options.todos.length, 1);
     });
   });
 

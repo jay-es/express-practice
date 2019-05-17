@@ -24,14 +24,14 @@ describe('postsController', () => {
     it('render引数: viewファイル名', () => {
       const [view] = res.render.args[0];
 
-      assert.strictEqual('posts', view);
+      assert.strictEqual(view, 'posts');
     });
 
     it('render引数: posts配列', () => {
       const [, options] = res.render.args[0];
 
       assert(Array.isArray(options.posts));
-      assert.strictEqual(100, options.posts.length);
+      assert.strictEqual(options.posts.length, 100);
     });
   });
 
@@ -46,7 +46,7 @@ describe('postsController', () => {
     it('render引数: posts配列', () => {
       const [, options] = res.render.args[0];
 
-      assert.strictEqual(10, options.posts.length);
+      assert.strictEqual(options.posts.length, 10);
     });
   });
 
@@ -65,7 +65,7 @@ describe('postsController', () => {
     it('render引数: viewファイル名', () => {
       const [view] = res.render.args[0];
 
-      assert.strictEqual('post-detail', view);
+      assert.strictEqual(view, 'post-detail');
     });
 
     it('render引数: postData', () => {
