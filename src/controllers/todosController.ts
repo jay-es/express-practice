@@ -24,7 +24,7 @@ export default {
     const todo = await TodoModel.findOne({ id: todoId }).exec();
 
     if (!todo) {
-      next({ message: 'No ToDo Found' });
+      next({ message: 'No ToDos Found' });
       return;
     }
 

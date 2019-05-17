@@ -1,5 +1,5 @@
 import assert from 'assert';
-import usersController from '../users';
+import usersController from '../usersController';
 import UserModel from '../../models/usersModel';
 import usersTable from './tables/usersTable';
 import createArgs from './_util';

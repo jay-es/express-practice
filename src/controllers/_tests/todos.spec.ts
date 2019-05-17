@@ -1,5 +1,5 @@
 import assert from 'assert';
-import todosController from '../todos';
+import todosController from '../todosController';
 import TodoModel from '../../models/todosModel';
 import todosTable from './tables/todosTable';
 import createArgs from './_util';

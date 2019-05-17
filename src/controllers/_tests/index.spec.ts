@@ -1,5 +1,5 @@
 import assert from 'assert';
-import indexController from '../index';
+import indexController from '../indexController';
 import createArgs from './_util';
 
 describe('indexController', () => {

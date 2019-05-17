@@ -1,5 +1,5 @@
 import express from 'express';
-import todosController from '../controllers/todos';
+import todosController from '../controllers/todosController';
 
 const router = express.Router();
 

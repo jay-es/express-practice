@@ -15,7 +15,7 @@ export default {
     const userData = result && result._doc;
 
     if (!userData) {
-      next({ message: 'No User Found' });
+      next({ message: 'No Users Found' });
       return;
     }
 
