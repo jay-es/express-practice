@@ -31,4 +31,25 @@ export default {
       postData,
     });
   },
+  async postCommentByPostId(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const postId = Number(req.params.postId);
+    const { name, email, body } = req.body;
+    let message = '';
+
+    if (!name) message += 'name is required.';
+    if (!email) message += 'email is required.';
+    if (!body) message += 'body is required.';
+
+    if (message) {
+      next({ message });
+      return;
+    }
+
+    // 手動インクリメント
+    const lastComment = await CommentModel.findOne(null, null, { sort: '-id' });
+    const id = lastComment.id + 1;
+
+    await CommentModel.collection.insert({ postId, id, name, email, body });
+    res.redirect('.');
+  },
 };

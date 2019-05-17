@@ -25,6 +25,12 @@
                 </tbody>
               </table>
             <% }); %>
+            <form action="./<%= postData.id %>/comment" method="post">
+              name: <input type="text" name="name" /><br>
+              email: <input type="email" name="email" /><br>
+              <textarea type="text" name="body"></textarea>
+              <button>Submit</button>
+            </form>
           </td>
         </tr>
       </tbody>

@@ -2,12 +2,18 @@ import assert from 'assert';
 import postsController from '../postsController';
 import PostModel from '../../models/postsModel';
 import postsTable from './tables/postsTable';
+import CommentModel from '../../models/commentsModel';
+import commentsTable from './tables/commentsTable';
 import createArgs from './_util';
 
 describe('postsController', () => {
   before(async () => {
     await PostModel.deleteMany({});
     await PostModel.insertMany(postsTable);
+  });
+  before(async () => {
+    await CommentModel.deleteMany({});
+    await CommentModel.insertMany(commentsTable);
   });
 
   describe('get: /', () => {
@@ -73,6 +79,7 @@ describe('postsController', () => {
 
       assert(options.postData);
       assert(Array.isArray(options.postData.comments));
+      assert.strictEqual(options.postData.comments.length, 5);
     });
   });
 
@@ -86,6 +93,29 @@ describe('postsController', () => {
 
     it('renderは呼ばれず、nextが呼ばれる', () => {
       assert(res.render.notCalled);
+      assert(next.calledOnce);
+    });
+  });
+
+  describe('post: /1/comment', () => {
+    const { req, res, next } = createArgs();
+    req.params.postId = '1';
+    req.body = {
+      postId: 1,
+      name: 'nnn',
+      email: 'eee',
+      body: 'bbb',
+    };
+
+    it('postにひもづくコメントが1件増えている', async () => {
+      await postsController.postCommentByPostId(req, res, next);
+      const comments = await CommentModel.find({ postId: 1 }, null, { sort: 'id' }).exec();
+      assert.strictEqual(comments.length, 6);
+    });
+
+    it('nameがないと、nextが呼ばれる', async () => {
+      req.body.name = '';
+      await postsController.postCommentByPostId(req, res, next);
       assert(next.calledOnce);
     });
   });
