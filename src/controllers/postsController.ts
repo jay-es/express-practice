@@ -49,7 +49,7 @@ export default {
     const lastComment = await CommentModel.findOne(null, null, { sort: '-id' });
     const id = lastComment.id + 1;
 
-    await CommentModel.collection.insert({ postId, id, name, email, body });
+    await CommentModel.collection.insertOne({ postId, id, name, email, body });
     res.redirect('.');
   },
 };
