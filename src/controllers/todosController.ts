@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import TodoModel from '../models/todosModel';
+import todoService from '../services/todoService';
 
 export default {
   async getTodos(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -13,7 +13,7 @@ export default {
       conds.completed = !!Number(req.query.completed);
     }
 
-    const todos = await TodoModel.find(conds, null, { sort: 'id' }).exec();
+    const todos = await todoService.getTodos(conds);
 
     res.render('todos', {
       todos,
@@ -21,15 +21,15 @@ export default {
   },
   async getTodoById(req: Request, res: Response, next: NextFunction): Promise<void> {
     const todoId = Number(req.params.todoId);
-    const todo = await TodoModel.findOne({ id: todoId }).exec();
 
-    if (!todo) {
-      next({ message: 'No ToDos Found' });
-      return;
+    try {
+      const todo = await todoService.getTodoById(todoId);
+
+      res.render('todos', {
+        todos: [todo],
+      });
+    } catch (e) {
+      next({ message: e.message });
     }
-
-    res.render('todos', {
-      todos: [todo],
-    });
   },
 };

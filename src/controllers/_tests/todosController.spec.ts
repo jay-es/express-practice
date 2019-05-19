@@ -1,15 +1,8 @@
 import assert from 'assert';
 import todosController from '../todosController';
-import TodoModel from '../../models/todosModel';
-import todosTable from './tables/todosTable';
 import createArgs from './_util';
 
 describe('todosController', () => {
-  before(async () => {
-    await TodoModel.deleteMany({});
-    await TodoModel.insertMany(todosTable);
-  });
-
   describe('get: /', () => {
     const { req, res, next } = createArgs();
 
@@ -21,17 +14,11 @@ describe('todosController', () => {
       assert(res.render.calledOnce);
     });
 
-    it('render引数: viewファイル名', () => {
-      const [view] = res.render.args[0];
+    it('render引数', () => {
+      const [view, options] = res.render.args[0];
 
       assert.strictEqual(view, 'todos');
-    });
-
-    it('render引数: todos配列', () => {
-      const [, options] = res.render.args[0];
-
       assert(Array.isArray(options.todos));
-      assert.strictEqual(options.todos.length, 200);
     });
   });
 
@@ -43,10 +30,11 @@ describe('todosController', () => {
       await todosController.getTodos(req, res, next);
     });
 
-    it('render引数: todos配列', () => {
-      const [, options] = res.render.args[0];
+    it('render引数', () => {
+      const [view, options] = res.render.args[0];
 
-      assert.strictEqual(options.todos.length, 20);
+      assert.strictEqual(view, 'todos');
+      assert(Array.isArray(options.todos));
     });
   });
 
@@ -58,10 +46,11 @@ describe('todosController', () => {
       await todosController.getTodos(req, res, next);
     });
 
-    it('render引数: todos配列', () => {
-      const [, options] = res.render.args[0];
+    it('render引数', () => {
+      const [view, options] = res.render.args[0];
 
-      assert.strictEqual(options.todos.length, 90);
+      assert.strictEqual(view, 'todos');
+      assert(Array.isArray(options.todos));
     });
   });
 
@@ -77,17 +66,11 @@ describe('todosController', () => {
       assert(res.render.calledOnce);
     });
 
-    it('render引数: viewファイル名', () => {
-      const [view] = res.render.args[0];
+    it('render引数', () => {
+      const [view, options] = res.render.args[0];
 
       assert.strictEqual(view, 'todos');
-    });
-
-    it('render引数: todos配列', () => {
-      const [, options] = res.render.args[0];
-
       assert(Array.isArray(options.todos));
-      assert.strictEqual(options.todos.length, 1);
     });
   });
 

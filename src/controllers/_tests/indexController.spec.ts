@@ -12,15 +12,10 @@ describe('indexController', () => {
       assert(res.render.calledOnce);
     });
 
-    it('render引数: viewファイル名', () => {
-      const [view] = res.render.args[0];
+    it('render引数', () => {
+      const [view, options] = res.render.args[0];
 
       assert.strictEqual(view, 'index');
-    });
-
-    it('render引数: title', () => {
-      const [, options] = res.render.args[0];
-
       assert.strictEqual(options.title, 'Express');
     });
   });

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import CommentModel from '../models/commentsModel';
-import PostModel from '../models/postsModel';
+import commentService from '../services/commentService';
+import postService from '../services/postService';
 
 export default {
   async getPosts(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -10,7 +10,7 @@ export default {
       conds.userId = Number(req.query.userId);
     }
 
-    const posts = await PostModel.find(conds, null, { sort: 'id' }).exec();
+    const posts = await postService.getPosts(conds);
 
     res.render('posts', {
       posts,
@@ -18,38 +18,27 @@ export default {
   },
   async getPostById(req: Request, res: Response, next: NextFunction): Promise<void> {
     const postId = Number(req.params.postId);
-    const postData = await PostModel.findOne({ id: postId }).exec();
 
-    if (!postData) {
-      next({ message: 'No Posts Found' });
-      return;
+    try {
+      const postData = await postService.getPostById(postId);
+      const comments = await commentService.getCommentsByPostId(postId);
+      res.render('post-detail', {
+        postData,
+        comments,
+      });
+    } catch (e) {
+      next({ message: e.message });
     }
-
-    postData.comments = await CommentModel.find({ postId }, null, { sort: 'id' }).exec();
-
-    res.render('post-detail', {
-      postData,
-    });
   },
   async postCommentByPostId(req: Request, res: Response, next: NextFunction): Promise<void> {
     const postId = Number(req.params.postId);
     const { name, email, body } = req.body;
-    let message = '';
 
-    if (!name) message += 'name is required.';
-    if (!email) message += 'email is required.';
-    if (!body) message += 'body is required.';
-
-    if (message) {
-      next({ message });
-      return;
+    try {
+      await commentService.postCommentByPostId(postId, name, email, body);
+      res.redirect('.');
+    } catch (e) {
+      next({ message: e.message });
     }
-
-    // 手動インクリメント
-    const lastComment = await CommentModel.findOne(null, null, { sort: '-id' });
-    const id = lastComment.id + 1;
-
-    await CommentModel.collection.insertOne({ postId, id, name, email, body });
-    res.redirect('.');
   },
 };
