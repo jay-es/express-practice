@@ -9,11 +9,11 @@ export interface Comment extends mongoose.Document {
 }
 
 const commentSchema = new mongoose.Schema({
-  postId: Number,
-  id: Number,
-  name: String,
-  email: String,
-  body: String,
+  postId: { type: Number, required: true },
+  id: { type: Number, required: true, unique: true },
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  body: { type: String, required: true },
 });
 
 export default (mongoose.models.Comment as mongoose.Model<Comment>) ||

@@ -9,7 +9,10 @@ const uri =
 export default {
   open: () =>
     mongoose
-      .connect(uri, { useNewUrlParser: true })
+      .connect(uri, {
+        useCreateIndex: true, // DeprecationWarningの抑制
+        useNewUrlParser: true,
+      })
       // .then(() => console.info('MongoDB connection successful'))
       .catch(err => console.error('MongoDB connection error:', err)),
   close: () => mongoose.disconnect(),

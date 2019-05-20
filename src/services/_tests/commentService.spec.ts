@@ -27,11 +27,14 @@ describe('commentService', () => {
       assert.strictEqual(newComments.length - oldComments.length, 1);
     });
 
-    it('引数が空だとエラー', () => {
-      assert.rejects(commentService.postCommentByPostId(0, 'nnn', 'eee', 'bbb'));
-      assert.rejects(commentService.postCommentByPostId(1, '', 'eee', 'bbb'));
-      assert.rejects(commentService.postCommentByPostId(1, 'nnn', '', 'bbb'));
-      assert.rejects(commentService.postCommentByPostId(1, 'nnn', 'eee', ''));
+    it('対象のpostがなければエラー', async () => {
+      await assert.rejects(commentService.postCommentByPostId(0, 'nnn', 'eee', 'bbb'));
+    });
+
+    it('引数が空だとエラー', async () => {
+      await assert.rejects(commentService.postCommentByPostId(1, '', 'eee', 'bbb'));
+      await assert.rejects(commentService.postCommentByPostId(1, 'nnn', '', 'bbb'));
+      await assert.rejects(commentService.postCommentByPostId(1, 'nnn', 'eee', ''));
     });
   });
 });
