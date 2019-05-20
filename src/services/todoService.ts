@@ -13,6 +13,6 @@ export default {
       throw new Error('No ToDos Found');
     }
 
-    return result._doc;
+    return result.toObject();
   },
 };

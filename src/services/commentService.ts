@@ -23,7 +23,7 @@ export default {
 
     // 手動インクリメント
     const lastComment = await CommentModel.findOne(null, null, { sort: '-id' });
-    const id = lastComment.id + 1;
+    const id = lastComment ? lastComment.id + 1 : 1;
 
     await CommentModel.collection.insertOne({ postId, id, name, email, body });
   },

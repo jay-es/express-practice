@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface User {
+export interface User extends mongoose.Document {
   id: number;
   name: string;
   username: string;
@@ -48,4 +48,5 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.models.User || mongoose.model('User', userSchema);
+export default (mongoose.models.User as mongoose.Model<User>) ||
+  mongoose.model<User>('User', userSchema);

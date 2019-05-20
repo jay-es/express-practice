@@ -13,6 +13,6 @@ export default {
       throw new Error('No Posts Found');
     }
 
-    return result._doc;
+    return result.toObject();
   },
 };

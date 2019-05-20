@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface Todo {
+export interface Todo extends mongoose.Document {
   userId: number;
   id: number;
   title: string;
@@ -14,4 +14,5 @@ const todoSchema = new mongoose.Schema({
   completed: Boolean,
 });
 
-export default mongoose.models.Todo || mongoose.model('Todo', todoSchema);
+export default (mongoose.models.Todo as mongoose.Model<Todo>) ||
+  mongoose.model<Todo>('Todo', todoSchema);

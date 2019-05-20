@@ -12,6 +12,6 @@ export default {
       throw new Error('No Users Found');
     }
 
-    return result._doc;
+    return result.toObject();
   },
 };

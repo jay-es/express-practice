@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface Comment {
+export interface Comment extends mongoose.Document {
   postId: number;
   id: number;
   name: string;
@@ -16,4 +16,5 @@ const commentSchema = new mongoose.Schema({
   body: String,
 });
 
-export default mongoose.models.Comment || mongoose.model('Comment', commentSchema);
+export default (mongoose.models.Comment as mongoose.Model<Comment>) ||
+  mongoose.model<Comment>('Comment', commentSchema);
