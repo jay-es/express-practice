@@ -1,35 +1,34 @@
 import assert from 'assert';
-import todoService from '../todoService';
-import TodoModel from '../../models/TodoModel';
+import todoModel, { Model } from '../todoModel';
 import todosTable from './tables/todosTable';
 
-describe('todoService', () => {
+describe('todoModel', () => {
   before(async () => {
-    await TodoModel.deleteMany({});
-    await TodoModel.insertMany(todosTable);
+    await Model.deleteMany({});
+    await Model.insertMany(todosTable);
   });
 
   describe('getTodos', () => {
     it('条件なしなら全件取得', async () => {
-      const todos = await todoService.getTodos();
+      const todos = await todoModel.getTodos();
 
       assert.strictEqual(todos.length, 200);
     });
 
     it('userId指定', async () => {
-      const todos = await todoService.getTodos({ userId: 1 });
+      const todos = await todoModel.getTodos({ userId: 1 });
 
       assert.strictEqual(todos.length, 20);
     });
 
     it('completed指定', async () => {
-      const todos = await todoService.getTodos({ completed: true });
+      const todos = await todoModel.getTodos({ completed: true });
 
       assert.strictEqual(todos.length, 90);
     });
 
     it('userIdとcompleted指定', async () => {
-      const todos = await todoService.getTodos({ userId: 1, completed: true });
+      const todos = await todoModel.getTodos({ userId: 1, completed: true });
 
       assert.strictEqual(todos.length, 11);
     });
@@ -37,13 +36,13 @@ describe('todoService', () => {
 
   describe('getTodoById', () => {
     it('存在するtodoIdを指定', async () => {
-      const todo = await todoService.getTodoById(1);
+      const todo = await todoModel.getTodoById(1);
 
       assert(todo);
     });
 
     it('存在しないtodoIdを指定', () => {
-      assert.rejects(todoService.getTodoById(0));
+      assert.rejects(todoModel.getTodoById(0));
     });
   });
 });

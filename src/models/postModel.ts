@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface Post extends mongoose.Document {
+interface Post extends mongoose.Document {
   userId: number;
   id: number;
   title: string;
@@ -14,5 +14,22 @@ const postSchema = new mongoose.Schema({
   body: String,
 });
 
-export default (mongoose.models.Post as mongoose.Model<Post>) ||
-  mongoose.model<Post>('Post', postSchema);
+export const Model: mongoose.Model<Post> =
+  mongoose.models.Post || mongoose.model('Post', postSchema);
+
+export default {
+  async getPosts(conds?: { userId?: number }): Promise<Post[]> {
+    const posts = await Model.find(conds, null, { sort: 'id' }).exec();
+
+    return posts;
+  },
+  async getPostById(postId: number): Promise<Post> {
+    const result = await Model.findOne({ id: postId }).exec();
+
+    if (!result) {
+      throw new Error('No Posts Found');
+    }
+
+    return result.toObject();
+  },
+};

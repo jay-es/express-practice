@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import commentService from '../services/commentService';
-import postService from '../services/postService';
+import commentModel from '../models/commentModel';
+import postModel from '../models/postModel';
 
 export default {
   async getPosts(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -10,7 +10,7 @@ export default {
       conds.userId = Number(req.query.userId);
     }
 
-    const posts = await postService.getPosts(conds);
+    const posts = await postModel.getPosts(conds);
 
     res.render('posts', {
       posts,
@@ -20,8 +20,8 @@ export default {
     const postId = Number(req.params.postId);
 
     try {
-      const postData = await postService.getPostById(postId);
-      const comments = await commentService.getCommentsByPostId(postId);
+      const postData = await postModel.getPostById(postId);
+      const comments = await commentModel.getCommentsByPostId(postId);
       res.render('post-detail', {
         postData,
         comments,
@@ -35,7 +35,7 @@ export default {
     const { name, email, body } = req.body;
 
     try {
-      await commentService.postCommentByPostId(postId, name, email, body);
+      await commentModel.postComment(postId, name, email, body);
       res.redirect('.');
     } catch (e) {
       next({ message: e.message });

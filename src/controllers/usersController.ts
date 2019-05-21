@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import userService from '../services/userService';
+import userModel from '../models/userModel';
 
 export default {
   async getUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const users = await userService.getUsers();
+    const users = await userModel.getUsers();
 
     res.render('users', {
       users,
@@ -13,7 +13,7 @@ export default {
     const userId = Number(req.params.userId);
 
     try {
-      const result = await userService.getUserById(userId);
+      const result = await userModel.getUserById(userId);
       const userData: { [k: string]: string } = {};
 
       Object.entries(result).forEach(([key, val]) => {

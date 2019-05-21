@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface User extends mongoose.Document {
+interface User extends mongoose.Document {
   id: number;
   name: string;
   username: string;
@@ -48,5 +48,21 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export default (mongoose.models.User as mongoose.Model<User>) ||
-  mongoose.model<User>('User', userSchema);
+export const Model: mongoose.Model<User> =
+  mongoose.models.User || mongoose.model('User', userSchema);
+
+export default {
+  async getUsers(): Promise<User[]> {
+    const users = await Model.find(null, null, { sort: 'id' }).exec();
+    return users;
+  },
+  async getUserById(userId: number): Promise<User> {
+    const result = await Model.findOne({ id: userId }).exec();
+
+    if (!result) {
+      throw new Error('No Users Found');
+    }
+
+    return result.toObject();
+  },
+};

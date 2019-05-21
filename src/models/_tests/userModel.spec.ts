@@ -1,17 +1,16 @@
 import assert from 'assert';
-import userService from '../userService';
-import UserModel from '../../models/UserModel';
+import userModel, { Model } from '../userModel';
 import usersTable from './tables/usersTable';
 
-describe('getUsers', () => {
+describe('userModel', () => {
   before(async () => {
-    await UserModel.deleteMany({});
-    await UserModel.insertMany(usersTable);
+    await Model.deleteMany({});
+    await Model.insertMany(usersTable);
   });
 
   describe('getUsers', () => {
     it('すべてのユーザーを取得', async () => {
-      const users = await userService.getUsers();
+      const users = await userModel.getUsers();
 
       assert.strictEqual(users.length, 10);
     });
@@ -19,13 +18,13 @@ describe('getUsers', () => {
 
   describe('getUserById', () => {
     it('存在するuserIdを指定', async () => {
-      const userData = await userService.getUserById(1);
+      const userData = await userModel.getUserById(1);
 
       assert(userData);
     });
 
     it('存在しないuserIdを指定', () => {
-      assert.rejects(userService.getUserById(0));
+      assert.rejects(userModel.getUserById(0));
     });
   });
 });
