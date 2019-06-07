@@ -21,15 +21,15 @@ export default {
   },
   async getTodoById(req: Request, res: Response, next: NextFunction): Promise<void> {
     const todoId = Number(req.params.todoId);
+    const todo = await todoModel.getTodoById(todoId);
 
-    try {
-      const todo = await todoModel.getTodoById(todoId);
-
-      res.render('todos', {
-        todos: [todo],
-      });
-    } catch (e) {
-      next({ message: e.message });
+    if (!todo.id) {
+      next({ message: 'Not Found', status: 404 });
+      return;
     }
+
+    res.render('todos', {
+      todos: [todo],
+    });
   },
 };

@@ -24,13 +24,17 @@ describe('postModel', () => {
 
   describe('getPostById', () => {
     it('存在するpostIdを指定', async () => {
-      const postData = await postModel.getPostById(1);
+      const postId = 1;
+      const postData = await postModel.getPostById(postId);
 
-      assert(postData);
+      assert.strictEqual(postData.id, postId);
     });
 
     it('存在しないpostIdを指定', async () => {
-      assert.rejects(postModel.getPostById(0));
+      const postId = 0;
+      const postData = await postModel.getPostById(postId);
+
+      assert.strictEqual(postData.id, undefined);
     });
   });
 });

@@ -20,16 +20,10 @@ export const Model: mongoose.Model<Todo> =
 export default {
   async getTodos(conds?: { userId?: number; completed?: boolean }): Promise<Todo[]> {
     const todos = await Model.find(conds, null, { sort: 'id' }).exec();
-
     return todos;
   },
   async getTodoById(todoId: number): Promise<Todo> {
     const result = await Model.findOne({ id: todoId }).exec();
-
-    if (!result) {
-      throw new Error('No ToDos Found');
-    }
-
-    return result.toObject();
+    return result ? result.toObject() : new Model();
   },
 };

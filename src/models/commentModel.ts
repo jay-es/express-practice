@@ -27,7 +27,10 @@ export default {
   },
   async postComment(postId: number, name: string, email: string, body: string): Promise<void> {
     // post が存在するか確認（なければ例外発生）
-    await postModel.getPostById(postId);
+    const postData = await postModel.getPostById(postId);
+    if (!postData.id) {
+      throw new Error('No Posts Found');
+    }
 
     // 手動インクリメント
     const lastComment = await Model.findOne(null, null, { sort: '-id' }).exec();

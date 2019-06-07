@@ -20,16 +20,10 @@ export const Model: mongoose.Model<Post> =
 export default {
   async getPosts(conds?: { userId?: number }): Promise<Post[]> {
     const posts = await Model.find(conds, null, { sort: 'id' }).exec();
-
     return posts;
   },
   async getPostById(postId: number): Promise<Post> {
     const result = await Model.findOne({ id: postId }).exec();
-
-    if (!result) {
-      throw new Error('No Posts Found');
-    }
-
-    return result.toObject();
+    return result ? result.toObject() : new Model();
   },
 };

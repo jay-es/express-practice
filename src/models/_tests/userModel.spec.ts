@@ -18,13 +18,17 @@ describe('userModel', () => {
 
   describe('getUserById', () => {
     it('存在するuserIdを指定', async () => {
-      const userData = await userModel.getUserById(1);
+      const userId = 1;
+      const userData = await userModel.getUserById(userId);
 
-      assert(userData);
+      assert.strictEqual(userData.id, userId);
     });
 
-    it('存在しないuserIdを指定', () => {
-      assert.rejects(userModel.getUserById(0));
+    it('存在しないuserIdを指定', async () => {
+      const userId = 0;
+      const userData = await userModel.getUserById(userId);
+
+      assert.strictEqual(userData.id, undefined);
     });
   });
 });

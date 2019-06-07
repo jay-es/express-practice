@@ -36,13 +36,17 @@ describe('todoModel', () => {
 
   describe('getTodoById', () => {
     it('存在するtodoIdを指定', async () => {
-      const todo = await todoModel.getTodoById(1);
+      const todoId = 1;
+      const todo = await todoModel.getTodoById(todoId);
 
-      assert(todo);
+      assert.strictEqual(todo.id, todoId);
     });
 
-    it('存在しないtodoIdを指定', () => {
-      assert.rejects(todoModel.getTodoById(0));
+    it('存在しないtodoIdを指定', async () => {
+      const todoId = 0;
+      const todo = await todoModel.getTodoById(todoId);
+
+      assert.strictEqual(todo.id, undefined);
     });
   });
 });

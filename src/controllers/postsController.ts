@@ -18,17 +18,19 @@ export default {
   },
   async getPostById(req: Request, res: Response, next: NextFunction): Promise<void> {
     const postId = Number(req.params.postId);
+    const postData = await postModel.getPostById(postId);
 
-    try {
-      const postData = await postModel.getPostById(postId);
-      const comments = await commentModel.getCommentsByPostId(postId);
-      res.render('post-detail', {
-        postData,
-        comments,
-      });
-    } catch (e) {
-      next({ message: e.message });
+    if (!postData.id) {
+      next({ message: 'Not Found', status: 404 });
+      return;
     }
+
+    const comments = await commentModel.getCommentsByPostId(postId);
+
+    res.render('post-detail', {
+      postData,
+      comments,
+    });
   },
   async postCommentByPostId(req: Request, res: Response, next: NextFunction): Promise<void> {
     const postId = Number(req.params.postId);

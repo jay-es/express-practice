@@ -58,11 +58,6 @@ export default {
   },
   async getUserById(userId: number): Promise<User> {
     const result = await Model.findOne({ id: userId }).exec();
-
-    if (!result) {
-      throw new Error('No Users Found');
-    }
-
-    return result.toObject();
+    return result ? result.toObject() : new Model();
   },
 };
